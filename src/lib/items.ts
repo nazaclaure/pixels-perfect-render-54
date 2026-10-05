@@ -71,6 +71,6 @@ export function todayISO() {
 }
 
 export function formatDate(iso: string) {
-  const [y, m, d] = iso.slice(0, 10).split("-").map(Number);
+  const [y = 1970, m = 1, d = 1] = iso.slice(0, 10).split("-").map(Number);
   return new Date(y, m - 1, d).toLocaleDateString("es-BO", { day: "numeric", month: "short", year: "numeric" });
 }
