@@ -36,28 +36,28 @@ function Perfil() {
   const saveName = async (e: FormEvent) => {
     e.preventDefault();
     if (!user) return;
-    if (!name.trim()) return toast.error("Escribe tu nombre");
+    if (!name.trim()) return void toast.error("Escribe tu nombre");
     setSavingName(true);
     const { error } = await supabase
       .from("profiles")
       .upsert({ id: user.id, full_name: name.trim().slice(0, 100) });
     setSavingName(false);
-    if (error) return toast.error("No se pudo guardar. Intenta de nuevo.");
+    if (error) return void toast.error("No se pudo guardar. Intenta de nuevo.");
     await refreshProfile();
     toast.success("Nombre actualizado");
   };
 
   const savePassword = async (e: FormEvent) => {
     e.preventDefault();
-    if (!currentPw || !newPw) return toast.error("Completa ambas contraseñas");
-    if (newPw.length < 8) return toast.error("La nueva contraseña debe tener al menos 8 caracteres");
+    if (!currentPw || !newPw) return void toast.error("Completa ambas contraseñas");
+    if (newPw.length < 8) return void toast.error("La nueva contraseña debe tener al menos 8 caracteres");
     setSavingPw(true);
     const { error } = await supabase.auth.updateUser({
       password: newPw,
       current_password: currentPw,
     } as Parameters<typeof supabase.auth.updateUser>[0]);
     setSavingPw(false);
-    if (error) return toast.error("No se pudo cambiar. Revisa tu contraseña actual.");
+    if (error) return void toast.error("No se pudo cambiar. Revisa tu contraseña actual.");
     setCurrentPw("");
     setNewPw("");
     toast.success("Contraseña cambiada");
