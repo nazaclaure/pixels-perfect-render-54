@@ -17,7 +17,7 @@ export function Logo({ light = false }: { light?: boolean }) {
       <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-secondary text-secondary-foreground">
         <Search className="h-5 w-5" strokeWidth={2.75} />
       </span>
-      UCB<span className="text-secondary">Found</span>
+      <span>UCB<span className="text-secondary">Found</span></span>
     </span>
   );
 }
