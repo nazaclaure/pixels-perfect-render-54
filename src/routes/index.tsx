@@ -1,24 +1,62 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { PackageSearch, HandHeart, ArrowRight } from "lucide-react";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "UCBFound — ¿Perdiste algo en la U?" },
+      { name: "description", content: "Reporta o encuentra objetos perdidos en la Universidad Católica Boliviana." },
+      { property: "og:title", content: "UCBFound — ¿Perdiste algo en la U?" },
+      { property: "og:description", content: "Reporta o encuentra objetos perdidos en la Universidad Católica Boliviana." },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="mx-auto max-w-3xl">
+      <section className="bg-hero relative overflow-hidden rounded-3xl px-6 py-12 text-center shadow-lift sm:py-16">
+        <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-secondary/20" />
+        <div className="absolute -bottom-14 -left-8 h-36 w-36 rounded-full bg-secondary/10" />
+        <span className="relative inline-block rounded-full bg-secondary px-3 py-1 text-xs font-bold text-secondary-foreground">
+          Comunidad UCB
+        </span>
+        <h1 className="relative mt-4 text-3xl font-extrabold leading-tight text-primary-foreground sm:text-5xl">
+          ¿Perdiste algo en la U?
+          <br />
+          <span className="text-secondary">Encuéntralo aquí.</span>
+        </h1>
+      </section>
+
+      <div className="mt-6 grid gap-4 sm:grid-cols-2">
+        <Link
+          to="/reportar"
+          className="group flex items-center gap-4 rounded-3xl bg-primary p-6 text-primary-foreground shadow-soft transition hover:-translate-y-0.5 hover:shadow-lift"
+        >
+          <span className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-primary-foreground/10 text-secondary">
+            <PackageSearch className="h-7 w-7" />
+          </span>
+          <span className="min-w-0 flex-1">
+            <span className="block text-xl font-bold">Perdí algo</span>
+            <span className="block text-sm text-primary-foreground/70">Avisa qué perdiste</span>
+          </span>
+          <ArrowRight className="h-5 w-5 shrink-0 transition group-hover:translate-x-1" />
+        </Link>
+        <Link
+          to="/reportar"
+          className="group flex items-center gap-4 rounded-3xl bg-secondary p-6 text-secondary-foreground shadow-soft transition hover:-translate-y-0.5 hover:shadow-lift"
+        >
+          <span className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-primary text-secondary">
+            <HandHeart className="h-7 w-7" />
+          </span>
+          <span className="min-w-0 flex-1">
+            <span className="block text-xl font-bold">Encontré algo</span>
+            <span className="block text-sm text-secondary-foreground/75">Ayuda a devolverlo</span>
+          </span>
+          <ArrowRight className="h-5 w-5 shrink-0 transition group-hover:translate-x-1" />
+        </Link>
+      </div>
     </div>
   );
 }
