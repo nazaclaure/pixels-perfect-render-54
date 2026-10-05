@@ -46,10 +46,13 @@ export const BUCKET = "item-photos";
 
 /** Returns path -> temporary viewable URL. */
 export async function signPhotos(paths: string[]): Promise<Record<string, string>> {
-  const unique = [...new Set(paths.filter(Boolean))];
-  if (!unique.length) return {};
-  const { data } = await supabase.storage.from(BUCKET).createSignedUrls(unique, 60 * 60);
+  const all = [...new Set(paths.filter(Boolean))];
   const map: Record<string, string> = {};
+  // Sample photos are bundled with the app (paths starting with "/").
+  all.filter((p) => p.startsWith("/")).forEach((p) => (map[p] = p));
+  const unique = all.filter((p) => !p.startsWith("/"));
+  if (!unique.length) return map;
+  const { data } = await supabase.storage.from(BUCKET).createSignedUrls(unique, 60 * 60);
   data?.forEach((d) => {
     if (d.path && d.signedUrl) map[d.path] = d.signedUrl;
   });
