@@ -3,11 +3,11 @@ import { supabase } from "@/integrations/supabase/client";
 import { PUBLIC_ITEM_COLUMNS, signPhotos, type PublicItem } from "@/lib/items";
 
 export interface ItemFilters {
-  q?: string;
-  category?: string;
-  color?: string;
-  location?: string;
-  from?: string;
+  q?: string | undefined;
+  category?: string | undefined;
+  color?: string | undefined;
+  location?: string | undefined;
+  from?: string | undefined;
 }
 
 export function useAvailableItems(filters: ItemFilters, limit = 60) {
