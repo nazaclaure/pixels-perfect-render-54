@@ -16,6 +16,8 @@ import { Route as AvisosRouteImport } from './routes/avisos'
 import { Route as BuscarRouteImport } from './routes/buscar'
 import { Route as AuthenticatedPerfilRouteImport } from './routes/_authenticated/perfil'
 import { Route as AuthenticatedReportarRouteImport } from './routes/_authenticated/reportar'
+import { Route as ObjetoIdRouteImport } from './routes/objeto.$id'
+import { Route as AuthenticatedReclamarIdRouteImport } from './routes/_authenticated/reclamar.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -51,6 +53,16 @@ const AuthenticatedReportarRoute = AuthenticatedReportarRouteImport.update({
   path: '/reportar',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const ObjetoIdRoute = ObjetoIdRouteImport.update({
+  id: '/objeto/$id',
+  path: '/objeto/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedReclamarIdRoute = AuthenticatedReclamarIdRouteImport.update({
+  id: '/reclamar/$id',
+  path: '/reclamar/$id',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -59,6 +71,8 @@ export interface FileRoutesByFullPath {
   '/buscar': typeof BuscarRoute
   '/perfil': typeof AuthenticatedPerfilRoute
   '/reportar': typeof AuthenticatedReportarRoute
+  '/objeto/$id': typeof ObjetoIdRoute
+  '/reclamar/$id': typeof AuthenticatedReclamarIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -67,6 +81,8 @@ export interface FileRoutesByTo {
   '/buscar': typeof BuscarRoute
   '/perfil': typeof AuthenticatedPerfilRoute
   '/reportar': typeof AuthenticatedReportarRoute
+  '/objeto/$id': typeof ObjetoIdRoute
+  '/reclamar/$id': typeof AuthenticatedReclamarIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -77,12 +93,30 @@ export interface FileRoutesById {
   '/buscar': typeof BuscarRoute
   '/_authenticated/perfil': typeof AuthenticatedPerfilRoute
   '/_authenticated/reportar': typeof AuthenticatedReportarRoute
+  '/objeto/$id': typeof ObjetoIdRoute
+  '/_authenticated/reclamar/$id': typeof AuthenticatedReclamarIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/avisos' | '/buscar' | '/perfil' | '/reportar'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/avisos'
+    | '/buscar'
+    | '/perfil'
+    | '/reportar'
+    | '/objeto/$id'
+    | '/reclamar/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/avisos' | '/buscar' | '/perfil' | '/reportar'
+  to:
+    | '/'
+    | '/auth'
+    | '/avisos'
+    | '/buscar'
+    | '/perfil'
+    | '/reportar'
+    | '/objeto/$id'
+    | '/reclamar/$id'
   id:
     | '__root__'
     | '/'
@@ -92,6 +126,8 @@ export interface FileRouteTypes {
     | '/buscar'
     | '/_authenticated/perfil'
     | '/_authenticated/reportar'
+    | '/objeto/$id'
+    | '/_authenticated/reclamar/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -100,6 +136,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   AvisosRoute: typeof AvisosRoute
   BuscarRoute: typeof BuscarRoute
+  ObjetoIdRoute: typeof ObjetoIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -153,17 +190,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedReportarRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/objeto/$id': {
+      id: '/objeto/$id'
+      path: '/objeto/$id'
+      fullPath: '/objeto/$id'
+      preLoaderRoute: typeof ObjetoIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/reclamar/$id': {
+      id: '/_authenticated/reclamar/$id'
+      path: '/reclamar/$id'
+      fullPath: '/reclamar/$id'
+      preLoaderRoute: typeof AuthenticatedReclamarIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedPerfilRoute: typeof AuthenticatedPerfilRoute
   AuthenticatedReportarRoute: typeof AuthenticatedReportarRoute
+  AuthenticatedReclamarIdRoute: typeof AuthenticatedReclamarIdRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedPerfilRoute: AuthenticatedPerfilRoute,
   AuthenticatedReportarRoute: AuthenticatedReportarRoute,
+  AuthenticatedReclamarIdRoute: AuthenticatedReclamarIdRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
@@ -175,6 +228,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   AvisosRoute: AvisosRoute,
   BuscarRoute: BuscarRoute,
+  ObjetoIdRoute: ObjetoIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
