@@ -15,6 +15,13 @@
       "when": 1791164843643,
       "tag": "0001_items_claims",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1791165191859,
+      "tag": "0002_admin_panel",
+      "breakpoints": true
     }
   ]
 }

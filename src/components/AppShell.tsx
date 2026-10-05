@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
-import { Bell, Home, PlusCircle, Search, User, LogIn } from "lucide-react";
+import { Bell, Home, PlusCircle, Search, User, LogIn, LayoutDashboard } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 
 const NAV = [
@@ -44,9 +44,9 @@ export function AppShell({ children }: { children: ReactNode }) {
           </nav>
           {user ? (
             role === "encargado" && (
-              <span className="rounded-full bg-secondary px-3 py-1 text-xs font-bold text-secondary-foreground">
-                Encargado
-              </span>
+              <Link to="/encargado" className="flex items-center gap-1.5 rounded-lg bg-secondary px-3 py-2 text-sm font-semibold text-secondary-foreground">
+                <LayoutDashboard className="h-4 w-4" /> Panel
+              </Link>
             )
           ) : (
             <Link

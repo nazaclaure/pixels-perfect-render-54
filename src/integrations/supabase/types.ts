@@ -23,6 +23,9 @@ export type Database = {
           details: string
           id: string
           item_id: string
+          reject_reason: string | null
+          reviewed_at: string | null
+          status: string
         }
         Insert: {
           answer1?: string | null
@@ -32,6 +35,9 @@ export type Database = {
           details: string
           id?: string
           item_id: string
+          reject_reason?: string | null
+          reviewed_at?: string | null
+          status?: string
         }
         Update: {
           answer1?: string | null
@@ -41,10 +47,61 @@ export type Database = {
           details?: string
           id?: string
           item_id?: string
+          reject_reason?: string | null
+          reviewed_at?: string | null
+          status?: string
         }
         Relationships: [
           {
             foreignKeyName: "claims_item_id_fkey"
+            columns: ["item_id"]
+            isOneToOne: false
+            referencedRelation: "found_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      deliveries: {
+        Row: {
+          claim_id: string | null
+          delivered_at: string
+          delivered_by: string
+          id: string
+          identity_checked: boolean
+          item_id: string
+          recipient_ci: string
+          recipient_name: string
+        }
+        Insert: {
+          claim_id?: string | null
+          delivered_at?: string
+          delivered_by?: string
+          id?: string
+          identity_checked?: boolean
+          item_id: string
+          recipient_ci: string
+          recipient_name: string
+        }
+        Update: {
+          claim_id?: string | null
+          delivered_at?: string
+          delivered_by?: string
+          id?: string
+          identity_checked?: boolean
+          item_id?: string
+          recipient_ci?: string
+          recipient_name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "deliveries_claim_id_fkey"
+            columns: ["claim_id"]
+            isOneToOne: false
+            referencedRelation: "claims"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "deliveries_item_id_fkey"
             columns: ["item_id"]
             isOneToOne: false
             referencedRelation: "found_items"
@@ -92,6 +149,7 @@ export type Database = {
           id: string
           location: string
           name: string
+          office_location: string | null
           photo_path: string
           status: Database["public"]["Enums"]["item_status"]
         }
@@ -105,6 +163,7 @@ export type Database = {
           id?: string
           location: string
           name: string
+          office_location?: string | null
           photo_path: string
           status?: Database["public"]["Enums"]["item_status"]
         }
@@ -118,6 +177,7 @@ export type Database = {
           id?: string
           location?: string
           name?: string
+          office_location?: string | null
           photo_path?: string
           status?: Database["public"]["Enums"]["item_status"]
         }
@@ -206,6 +266,62 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_deliver: {
+        Args: {
+          _ci: string
+          _claim_id: string
+          _item_id: string
+          _name: string
+        }
+        Returns: undefined
+      }
+      admin_list_claims: {
+        Args: never
+        Returns: {
+          answer1: string
+          answer2: string
+          claimant_email: string
+          claimant_name: string
+          created_at: string
+          details: string
+          id: string
+          item_category: string
+          item_description: string
+          item_id: string
+          item_name: string
+          item_photo: string
+          item_status: Database["public"]["Enums"]["item_status"]
+          private_detail: string
+          question1: string
+          question2: string
+          reject_reason: string
+          status: string
+        }[]
+      }
+      admin_list_items: {
+        Args: never
+        Returns: {
+          category: string
+          color: string
+          created_at: string
+          description: string
+          finder_email: string
+          finder_name: string
+          found_date: string
+          id: string
+          location: string
+          name: string
+          office_location: string
+          photo_path: string
+          status: Database["public"]["Enums"]["item_status"]
+        }[]
+      }
+      admin_review_claim: {
+        Args: { _accept: boolean; _claim_id: string; _reason: string }
+        Returns: undefined
+      }
+      admin_summary: { Args: never; Returns: Json }
+      assert_encargado: { Args: never; Returns: undefined }
       get_item_questions: {
         Args: { _item_id: string }
         Returns: {
