@@ -14,7 +14,6 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AvisosRouteImport } from './routes/avisos'
 import { Route as BuscarRouteImport } from './routes/buscar'
-import { Route as ReportarRouteImport } from './routes/reportar'
 import { Route as AuthenticatedPerfilRouteImport } from './routes/_authenticated/perfil'
 
 const IndexRoute = IndexRouteImport.update({
@@ -41,11 +40,6 @@ const BuscarRoute = BuscarRouteImport.update({
   path: '/buscar',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ReportarRoute = ReportarRouteImport.update({
-  id: '/reportar',
-  path: '/reportar',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AuthenticatedPerfilRoute = AuthenticatedPerfilRouteImport.update({
   id: '/perfil',
   path: '/perfil',
@@ -57,7 +51,6 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/avisos': typeof AvisosRoute
   '/buscar': typeof BuscarRoute
-  '/reportar': typeof ReportarRoute
   '/perfil': typeof AuthenticatedPerfilRoute
 }
 export interface FileRoutesByTo {
@@ -65,7 +58,6 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/avisos': typeof AvisosRoute
   '/buscar': typeof BuscarRoute
-  '/reportar': typeof ReportarRoute
   '/perfil': typeof AuthenticatedPerfilRoute
 }
 export interface FileRoutesById {
@@ -75,14 +67,13 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/avisos': typeof AvisosRoute
   '/buscar': typeof BuscarRoute
-  '/reportar': typeof ReportarRoute
   '/_authenticated/perfil': typeof AuthenticatedPerfilRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/avisos' | '/buscar' | '/reportar' | '/perfil'
+  fullPaths: '/' | '/auth' | '/avisos' | '/buscar' | '/perfil'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/avisos' | '/buscar' | '/reportar' | '/perfil'
+  to: '/' | '/auth' | '/avisos' | '/buscar' | '/perfil'
   id:
     | '__root__'
     | '/'
@@ -90,7 +81,6 @@ export interface FileRouteTypes {
     | '/auth'
     | '/avisos'
     | '/buscar'
-    | '/reportar'
     | '/_authenticated/perfil'
   fileRoutesById: FileRoutesById
 }
@@ -100,7 +90,6 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   AvisosRoute: typeof AvisosRoute
   BuscarRoute: typeof BuscarRoute
-  ReportarRoute: typeof ReportarRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -140,13 +129,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BuscarRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/reportar': {
-      id: '/reportar'
-      path: '/reportar'
-      fullPath: '/reportar'
-      preLoaderRoute: typeof ReportarRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/_authenticated/perfil': {
       id: '/_authenticated/perfil'
       path: '/perfil'
@@ -174,7 +156,6 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   AvisosRoute: AvisosRoute,
   BuscarRoute: BuscarRoute,
-  ReportarRoute: ReportarRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
