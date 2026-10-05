@@ -14,6 +14,154 @@ export type Database = {
   }
   public: {
     Tables: {
+      claims: {
+        Row: {
+          answer1: string | null
+          answer2: string | null
+          claimant_id: string
+          created_at: string
+          details: string
+          id: string
+          item_id: string
+        }
+        Insert: {
+          answer1?: string | null
+          answer2?: string | null
+          claimant_id?: string
+          created_at?: string
+          details: string
+          id?: string
+          item_id: string
+        }
+        Update: {
+          answer1?: string | null
+          answer2?: string | null
+          claimant_id?: string
+          created_at?: string
+          details?: string
+          id?: string
+          item_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "claims_item_id_fkey"
+            columns: ["item_id"]
+            isOneToOne: false
+            referencedRelation: "found_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      found_item_secrets: {
+        Row: {
+          item_id: string
+          private_detail: string | null
+          question1: string | null
+          question2: string | null
+        }
+        Insert: {
+          item_id: string
+          private_detail?: string | null
+          question1?: string | null
+          question2?: string | null
+        }
+        Update: {
+          item_id?: string
+          private_detail?: string | null
+          question1?: string | null
+          question2?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "found_item_secrets_item_id_fkey"
+            columns: ["item_id"]
+            isOneToOne: true
+            referencedRelation: "found_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      found_items: {
+        Row: {
+          category: string
+          color: string | null
+          created_at: string
+          description: string | null
+          finder_id: string
+          found_date: string
+          id: string
+          location: string
+          name: string
+          photo_path: string
+          status: Database["public"]["Enums"]["item_status"]
+        }
+        Insert: {
+          category: string
+          color?: string | null
+          created_at?: string
+          description?: string | null
+          finder_id?: string
+          found_date: string
+          id?: string
+          location: string
+          name: string
+          photo_path: string
+          status?: Database["public"]["Enums"]["item_status"]
+        }
+        Update: {
+          category?: string
+          color?: string | null
+          created_at?: string
+          description?: string | null
+          finder_id?: string
+          found_date?: string
+          id?: string
+          location?: string
+          name?: string
+          photo_path?: string
+          status?: Database["public"]["Enums"]["item_status"]
+        }
+        Relationships: []
+      }
+      lost_reports: {
+        Row: {
+          category: string
+          color: string | null
+          created_at: string
+          description: string | null
+          id: string
+          location: string
+          lost_date: string
+          name: string
+          photo_path: string | null
+          user_id: string
+        }
+        Insert: {
+          category: string
+          color?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          location: string
+          lost_date: string
+          name: string
+          photo_path?: string | null
+          user_id?: string
+        }
+        Update: {
+          category?: string
+          color?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          location?: string
+          lost_date?: string
+          name?: string
+          photo_path?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
@@ -58,6 +206,13 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_item_questions: {
+        Args: { _item_id: string }
+        Returns: {
+          question1: string
+          question2: string
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -68,6 +223,7 @@ export type Database = {
     }
     Enums: {
       app_role: "miembro" | "encargado"
+      item_status: "por_recibir" | "disponible" | "en_revision" | "entregado"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -196,6 +352,7 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["miembro", "encargado"],
+      item_status: ["por_recibir", "disponible", "en_revision", "entregado"],
     },
   },
 } as const
