@@ -7,7 +7,7 @@ export function StatusBadge({ status }: { status: ItemStatus }) {
   return <span className={`inline-block rounded-full px-2.5 py-0.5 text-xs font-bold ${s.className}`}>{s.label}</span>;
 }
 
-export function ItemCard({ item, photoUrl }: { item: PublicItem; photoUrl?: string }) {
+export function ItemCard({ item, photoUrl }: { item: PublicItem; photoUrl?: string | undefined }) {
   return (
     <Link
       to="/objeto/$id"
