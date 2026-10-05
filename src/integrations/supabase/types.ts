@@ -186,6 +186,7 @@ export type Database = {
       lost_reports: {
         Row: {
           category: string
+          closed_at: string | null
           color: string | null
           created_at: string
           description: string | null
@@ -194,10 +195,12 @@ export type Database = {
           lost_date: string
           name: string
           photo_path: string | null
+          status: string
           user_id: string
         }
         Insert: {
           category: string
+          closed_at?: string | null
           color?: string | null
           created_at?: string
           description?: string | null
@@ -206,10 +209,12 @@ export type Database = {
           lost_date: string
           name: string
           photo_path?: string | null
+          status?: string
           user_id?: string
         }
         Update: {
           category?: string
+          closed_at?: string | null
           color?: string | null
           created_at?: string
           description?: string | null
@@ -218,6 +223,76 @@ export type Database = {
           lost_date?: string
           name?: string
           photo_path?: string | null
+          status?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      matches: {
+        Row: {
+          created_at: string
+          found_item_id: string
+          id: string
+          lost_report_id: string
+        }
+        Insert: {
+          created_at?: string
+          found_item_id: string
+          id?: string
+          lost_report_id: string
+        }
+        Update: {
+          created_at?: string
+          found_item_id?: string
+          id?: string
+          lost_report_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "matches_found_item_id_fkey"
+            columns: ["found_item_id"]
+            isOneToOne: false
+            referencedRelation: "found_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "matches_lost_report_id_fkey"
+            columns: ["lost_report_id"]
+            isOneToOne: false
+            referencedRelation: "lost_reports"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      notifications: {
+        Row: {
+          body: string | null
+          created_at: string
+          id: string
+          link: string | null
+          read_at: string | null
+          title: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          link?: string | null
+          read_at?: string | null
+          title: string
+          type: string
+          user_id: string
+        }
+        Update: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          link?: string | null
+          read_at?: string | null
+          title?: string
+          type?: string
           user_id?: string
         }
         Relationships: []
@@ -322,6 +397,10 @@ export type Database = {
       }
       admin_summary: { Args: never; Returns: Json }
       assert_encargado: { Args: never; Returns: undefined }
+      create_matches: {
+        Args: { _item_id: string; _report_id: string }
+        Returns: undefined
+      }
       get_item_questions: {
         Args: { _item_id: string }
         Returns: {
@@ -336,6 +415,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      locations_near: { Args: { a: string; b: string }; Returns: boolean }
     }
     Enums: {
       app_role: "miembro" | "encargado"
