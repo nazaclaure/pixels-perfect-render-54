@@ -277,8 +277,6 @@ export function Claims() {
                 <p className="flex items-center gap-1.5 font-bold text-primary"><Lock className="h-4 w-4" /> Datos privados del objeto</p>
                 <Row label="Descripción" value={c.item_description} />
                 <Row label="Detalle privado" value={c.private_detail} />
-                {c.question1 && <Row label={`P1: ${c.question1}`} value="(respuesta esperada no registrada)" muted />}
-                {c.question2 && <Row label={`P2: ${c.question2}`} value="(respuesta esperada no registrada)" muted />}
               </div>
               <div className="space-y-2 p-4 text-sm">
                 <p className="flex items-center gap-1.5 font-bold text-primary"><MessageSquareText className="h-4 w-4" /> Lo que escribió</p>

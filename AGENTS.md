@@ -15,3 +15,4 @@
 - Found-item photos live in a private storage bucket and are shown via short-lived signed URLs — public buckets are blocked by workspace policy.
 - `found_items` uses column-level grants so description is never readable by the public; verification data lives in `found_item_secrets`, and claimants read only the questions via a security-definer RPC.
 - Claim inserts move the item to "en revisión" through a database trigger, not client code — keeps status changes trustworthy.
+- Encargado panel data (private item info, claimant contact, CI, deliveries) is read and written only through security-definer `admin_*` RPCs that call `assert_encargado()` — role check enforced server-side, not just by hiding the UI.
