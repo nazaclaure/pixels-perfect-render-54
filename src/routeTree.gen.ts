@@ -14,6 +14,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AvisosRouteImport } from './routes/avisos'
 import { Route as BuscarRouteImport } from './routes/buscar'
+import { Route as AuthenticatedEncargadoRouteImport } from './routes/_authenticated/encargado'
 import { Route as AuthenticatedPerfilRouteImport } from './routes/_authenticated/perfil'
 import { Route as AuthenticatedReportarRouteImport } from './routes/_authenticated/reportar'
 import { Route as ObjetoIdRouteImport } from './routes/objeto.$id'
@@ -43,6 +44,11 @@ const BuscarRoute = BuscarRouteImport.update({
   path: '/buscar',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedEncargadoRoute = AuthenticatedEncargadoRouteImport.update({
+  id: '/encargado',
+  path: '/encargado',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedPerfilRoute = AuthenticatedPerfilRouteImport.update({
   id: '/perfil',
   path: '/perfil',
@@ -69,6 +75,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/avisos': typeof AvisosRoute
   '/buscar': typeof BuscarRoute
+  '/encargado': typeof AuthenticatedEncargadoRoute
   '/perfil': typeof AuthenticatedPerfilRoute
   '/reportar': typeof AuthenticatedReportarRoute
   '/objeto/$id': typeof ObjetoIdRoute
@@ -79,6 +86,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/avisos': typeof AvisosRoute
   '/buscar': typeof BuscarRoute
+  '/encargado': typeof AuthenticatedEncargadoRoute
   '/perfil': typeof AuthenticatedPerfilRoute
   '/reportar': typeof AuthenticatedReportarRoute
   '/objeto/$id': typeof ObjetoIdRoute
@@ -91,6 +99,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/avisos': typeof AvisosRoute
   '/buscar': typeof BuscarRoute
+  '/_authenticated/encargado': typeof AuthenticatedEncargadoRoute
   '/_authenticated/perfil': typeof AuthenticatedPerfilRoute
   '/_authenticated/reportar': typeof AuthenticatedReportarRoute
   '/objeto/$id': typeof ObjetoIdRoute
@@ -103,6 +112,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/avisos'
     | '/buscar'
+    | '/encargado'
     | '/perfil'
     | '/reportar'
     | '/objeto/$id'
@@ -113,6 +123,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/avisos'
     | '/buscar'
+    | '/encargado'
     | '/perfil'
     | '/reportar'
     | '/objeto/$id'
@@ -124,6 +135,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/avisos'
     | '/buscar'
+    | '/_authenticated/encargado'
     | '/_authenticated/perfil'
     | '/_authenticated/reportar'
     | '/objeto/$id'
@@ -176,6 +188,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BuscarRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/encargado': {
+      id: '/_authenticated/encargado'
+      path: '/encargado'
+      fullPath: '/encargado'
+      preLoaderRoute: typeof AuthenticatedEncargadoRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/perfil': {
       id: '/_authenticated/perfil'
       path: '/perfil'
@@ -208,12 +227,14 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedEncargadoRoute: typeof AuthenticatedEncargadoRoute
   AuthenticatedPerfilRoute: typeof AuthenticatedPerfilRoute
   AuthenticatedReportarRoute: typeof AuthenticatedReportarRoute
   AuthenticatedReclamarIdRoute: typeof AuthenticatedReclamarIdRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedEncargadoRoute: AuthenticatedEncargadoRoute,
   AuthenticatedPerfilRoute: AuthenticatedPerfilRoute,
   AuthenticatedReportarRoute: AuthenticatedReportarRoute,
   AuthenticatedReclamarIdRoute: AuthenticatedReclamarIdRoute,
