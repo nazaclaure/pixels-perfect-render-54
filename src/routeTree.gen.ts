@@ -15,10 +15,12 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AvisosRouteImport } from './routes/avisos'
 import { Route as BuscarRouteImport } from './routes/buscar'
 import { Route as AuthenticatedEncargadoRouteImport } from './routes/_authenticated/encargado'
+import { Route as AuthenticatedMisReportesRouteImport } from './routes/_authenticated/mis-reportes'
 import { Route as AuthenticatedPerfilRouteImport } from './routes/_authenticated/perfil'
 import { Route as AuthenticatedReportarRouteImport } from './routes/_authenticated/reportar'
 import { Route as ObjetoIdRouteImport } from './routes/objeto.$id'
 import { Route as AuthenticatedReclamarIdRouteImport } from './routes/_authenticated/reclamar.$id'
+import { Route as AuthenticatedReporteIdRouteImport } from './routes/_authenticated/reporte.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -49,6 +51,12 @@ const AuthenticatedEncargadoRoute = AuthenticatedEncargadoRouteImport.update({
   path: '/encargado',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedMisReportesRoute =
+  AuthenticatedMisReportesRouteImport.update({
+    id: '/mis-reportes',
+    path: '/mis-reportes',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedPerfilRoute = AuthenticatedPerfilRouteImport.update({
   id: '/perfil',
   path: '/perfil',
@@ -69,6 +77,11 @@ const AuthenticatedReclamarIdRoute = AuthenticatedReclamarIdRouteImport.update({
   path: '/reclamar/$id',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedReporteIdRoute = AuthenticatedReporteIdRouteImport.update({
+  id: '/reporte/$id',
+  path: '/reporte/$id',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -76,10 +89,12 @@ export interface FileRoutesByFullPath {
   '/avisos': typeof AvisosRoute
   '/buscar': typeof BuscarRoute
   '/encargado': typeof AuthenticatedEncargadoRoute
+  '/mis-reportes': typeof AuthenticatedMisReportesRoute
   '/perfil': typeof AuthenticatedPerfilRoute
   '/reportar': typeof AuthenticatedReportarRoute
   '/objeto/$id': typeof ObjetoIdRoute
   '/reclamar/$id': typeof AuthenticatedReclamarIdRoute
+  '/reporte/$id': typeof AuthenticatedReporteIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -87,10 +102,12 @@ export interface FileRoutesByTo {
   '/avisos': typeof AvisosRoute
   '/buscar': typeof BuscarRoute
   '/encargado': typeof AuthenticatedEncargadoRoute
+  '/mis-reportes': typeof AuthenticatedMisReportesRoute
   '/perfil': typeof AuthenticatedPerfilRoute
   '/reportar': typeof AuthenticatedReportarRoute
   '/objeto/$id': typeof ObjetoIdRoute
   '/reclamar/$id': typeof AuthenticatedReclamarIdRoute
+  '/reporte/$id': typeof AuthenticatedReporteIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -100,10 +117,12 @@ export interface FileRoutesById {
   '/avisos': typeof AvisosRoute
   '/buscar': typeof BuscarRoute
   '/_authenticated/encargado': typeof AuthenticatedEncargadoRoute
+  '/_authenticated/mis-reportes': typeof AuthenticatedMisReportesRoute
   '/_authenticated/perfil': typeof AuthenticatedPerfilRoute
   '/_authenticated/reportar': typeof AuthenticatedReportarRoute
   '/objeto/$id': typeof ObjetoIdRoute
   '/_authenticated/reclamar/$id': typeof AuthenticatedReclamarIdRoute
+  '/_authenticated/reporte/$id': typeof AuthenticatedReporteIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -113,10 +132,12 @@ export interface FileRouteTypes {
     | '/avisos'
     | '/buscar'
     | '/encargado'
+    | '/mis-reportes'
     | '/perfil'
     | '/reportar'
     | '/objeto/$id'
     | '/reclamar/$id'
+    | '/reporte/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -124,10 +145,12 @@ export interface FileRouteTypes {
     | '/avisos'
     | '/buscar'
     | '/encargado'
+    | '/mis-reportes'
     | '/perfil'
     | '/reportar'
     | '/objeto/$id'
     | '/reclamar/$id'
+    | '/reporte/$id'
   id:
     | '__root__'
     | '/'
@@ -136,10 +159,12 @@ export interface FileRouteTypes {
     | '/avisos'
     | '/buscar'
     | '/_authenticated/encargado'
+    | '/_authenticated/mis-reportes'
     | '/_authenticated/perfil'
     | '/_authenticated/reportar'
     | '/objeto/$id'
     | '/_authenticated/reclamar/$id'
+    | '/_authenticated/reporte/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -195,6 +220,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedEncargadoRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/mis-reportes': {
+      id: '/_authenticated/mis-reportes'
+      path: '/mis-reportes'
+      fullPath: '/mis-reportes'
+      preLoaderRoute: typeof AuthenticatedMisReportesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/perfil': {
       id: '/_authenticated/perfil'
       path: '/perfil'
@@ -223,21 +255,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedReclamarIdRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/reporte/$id': {
+      id: '/_authenticated/reporte/$id'
+      path: '/reporte/$id'
+      fullPath: '/reporte/$id'
+      preLoaderRoute: typeof AuthenticatedReporteIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedEncargadoRoute: typeof AuthenticatedEncargadoRoute
+  AuthenticatedMisReportesRoute: typeof AuthenticatedMisReportesRoute
   AuthenticatedPerfilRoute: typeof AuthenticatedPerfilRoute
   AuthenticatedReportarRoute: typeof AuthenticatedReportarRoute
   AuthenticatedReclamarIdRoute: typeof AuthenticatedReclamarIdRoute
+  AuthenticatedReporteIdRoute: typeof AuthenticatedReporteIdRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedEncargadoRoute: AuthenticatedEncargadoRoute,
+  AuthenticatedMisReportesRoute: AuthenticatedMisReportesRoute,
   AuthenticatedPerfilRoute: AuthenticatedPerfilRoute,
   AuthenticatedReportarRoute: AuthenticatedReportarRoute,
   AuthenticatedReclamarIdRoute: AuthenticatedReclamarIdRoute,
+  AuthenticatedReporteIdRoute: AuthenticatedReporteIdRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
