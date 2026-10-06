@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { Bell, Home, PlusCircle, Search, User, LogIn, LayoutDashboard } from "lucide-react";
 import { useAuth } from "@/lib/auth";
+import { useUnreadCount } from "@/lib/notifications";
 
 const NAV = [
   { to: "/", label: "Inicio", icon: Home },
@@ -24,6 +25,7 @@ export function Logo({ light = false }: { light?: boolean }) {
 
 export function AppShell({ children }: { children: ReactNode }) {
   const { user, role } = useAuth();
+  const unread = useUnreadCount();
   return (
     <div className="min-h-screen bg-muted">
       <header className="sticky top-0 z-30 bg-primary shadow-soft">
@@ -43,11 +45,21 @@ export function AppShell({ children }: { children: ReactNode }) {
             ))}
           </nav>
           {user ? (
-            role === "encargado" && (
-              <Link to="/encargado" className="flex items-center gap-1.5 rounded-lg bg-secondary px-3 py-2 text-sm font-semibold text-secondary-foreground">
-                <LayoutDashboard className="h-4 w-4" /> Panel
+            <div className="flex items-center gap-2">
+              <Link to="/avisos" aria-label={`Avisos${unread ? `, ${unread} sin leer` : ""}`} className="relative grid h-10 w-10 place-items-center rounded-lg text-primary-foreground hover:bg-primary-foreground/10">
+                <Bell className="h-5 w-5" />
+                {unread > 0 && (
+                  <span className="absolute -right-0.5 -top-0.5 grid h-5 min-w-5 place-items-center rounded-full bg-secondary px-1 text-[11px] font-bold text-secondary-foreground">
+                    {unread > 9 ? "9+" : unread}
+                  </span>
+                )}
               </Link>
-            )
+              {role === "encargado" && (
+                <Link to="/encargado" className="flex items-center gap-1.5 rounded-lg bg-secondary px-3 py-2 text-sm font-semibold text-secondary-foreground">
+                  <LayoutDashboard className="h-4 w-4" /> Panel
+                </Link>
+              )}
+            </div>
           ) : (
             <Link
               to="/auth"
