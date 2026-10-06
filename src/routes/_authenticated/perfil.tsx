@@ -1,7 +1,7 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState, type FormEvent } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { LogOut, Save, KeyRound, UserRound } from "lucide-react";
+import { LogOut, Save, KeyRound, UserRound, ClipboardList, ChevronRight } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
@@ -85,6 +85,11 @@ function Perfil() {
         </div>
       </div>
 
+      <Link to="/mis-reportes" className="flex items-center gap-3 rounded-3xl bg-card p-5 font-bold text-primary shadow-soft transition hover:shadow-lift">
+        <span className="grid h-10 w-10 place-items-center rounded-xl bg-accent"><ClipboardList className="h-5 w-5" /></span>
+        <span className="flex-1">Mis reportes</span>
+        <ChevronRight className="h-5 w-5 text-muted-foreground" />
+      </Link>
       <form onSubmit={saveName} className="space-y-3 rounded-3xl bg-card p-6 shadow-soft">
         <h2 className="text-lg font-bold text-primary">Tu nombre</h2>
         <div className="space-y-1.5">
