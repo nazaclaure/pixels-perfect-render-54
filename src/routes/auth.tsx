@@ -23,6 +23,12 @@ export const Route = createFileRoute("/auth")({
 
 const DOMAIN = "@ucb.edu.bo";
 
+// Cuentas demo ya creadas en Supabase (mismas credenciales que src/lib/demo.functions.ts).
+const DEMO_CREDS = {
+  miembro: { email: "demo.estudiante@ucb.edu.bo", password: "UcbFoundDemo2026!" },
+  encargado: { email: "demo.encargado@ucb.edu.bo", password: "UcbFoundDemo2026!" },
+} as const;
+
 function AuthPage() {
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -72,9 +78,14 @@ function AuthPage() {
     setError("");
     setBusy(role);
     try {
-      const creds = await demoFn({ data: { role } });
-      const { error } = await supabase.auth.signInWithPassword(creds);
-      if (error) throw error;
+      // 1) Entrar directo con la cuenta demo (no necesita clave secreta del servidor).
+      const direct = await supabase.auth.signInWithPassword(DEMO_CREDS[role]);
+      if (direct.error) {
+        // 2) Si la cuenta aún no existe, el servidor la crea y se vuelve a intentar.
+        const creds = await demoFn({ data: { role } });
+        const { error } = await supabase.auth.signInWithPassword(creds);
+        if (error) throw error;
+      }
     } catch {
       setError("No se pudo entrar como demo. Intenta de nuevo.");
     } finally {
